@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="flex flex-col md:flex-row m-8">
+	<img 
+		class="p-8 w-80 h-80 rounded-xl bg-white object-contain" 
+		src="{{componente.imagen.url}}"/>
+
+	<div class="flex flex-col py-8 md:py-0 md:px-8 ">
+		<h1 class="text-3xl font-bold">{{componente.nombre}}</h1>
+		<p class="whitespace-pre-wrap">{{componente.descripcion}}</p>
+	</div>
+	<div class="flex flex-col items-end">
+		<h1 class="text-3xl font-bold">${{componente.precio}}</h1>
+		<p >Stock: <b>{{componente.stock}}</b></p>
+		<a class="btn btn-primary mt-8" href="/carrito/agregar/{{componente.id}}">Agregar al carrito</a>
+	</div>
+	
+</div>
+{% endblock content %}

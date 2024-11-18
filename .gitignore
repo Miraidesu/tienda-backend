@@ -1,0 +1,5 @@
+
+/.venv
+/node_modules
+/tienda/__pycache__
+/tienda/migrations/__pycache__

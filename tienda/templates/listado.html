@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">	
+	{% for componente in componentes %}
+	<a href="/componentes/{{componente.id}}"
+	class="btn bg-base-300 hover:bg-[#0c0f12] flex flex-col h-full gap-0 m-0 p-0 rounded-2xl border-0">
+		<div class="card card-compact w-72 flex-grow">
+			<figure>
+			<img 
+				class="p-8 w-full h-64 bg-white object-contain" 
+				src="{{componente.imagen.url}}"/>
+			</figure>
+			<div class="card-body">
+				<h2 class="text-left card-title text-white">{{componente.nombre}}</h2>
+				<p class="flex text-xl">${{componente.precio}}</p>
+			</div>
+		</div>
+	</a>
+		
+	{% endfor %}
+</div>
+{% endblock content %}
