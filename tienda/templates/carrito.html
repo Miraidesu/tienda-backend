@@ -1,5 +1,48 @@
 {% extends "_base.html" %}
 
 {% block content %}
+	<div class="grid grid-cols-3">
+		<div class="col-span-2 h-50">
+			<h1>Carrito de compras</h1>
+			{% if not carrito %}
+				El carrito esta pelao
+			{% else %}
+				{% for item in carrito %}
+				<table class="table">
+					<!-- head -->
+					<thead>
+					  <tr>
+						<th>Producto</th>
+						<th>Precio</th>
+						<th>Cantidad</th>
+						<th>Total</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr>
+						<td>
+							<div class="flex gap-6">
+								<img class="p-4 w-32 h-32 rounded-xl bg-white object-contain" 
+									src="{{item.producto.imagen.url}}" alt="{{item.producto.nombre}}">
+								<p>{{item.producto.nombre}}</p><br>
+							</div>
+						</td>
+						<td>${{item.producto.precio}}</td>
+						<td><input type="number" class="input input-bordered"
+							value="{{item.cantidad}}" min="0" max="{{item.producto.stock}}"></td>
+						<td>${{}}</td>
+					  </tr>
+					</tbody>
+				  </table>
+				
+					
+				{% endfor %}
+			{% endif %}
+		</div>
+		<div class=" h-50">
+			<h1>Total $99999</h1>
+			<button class="btn">Pagar</button>
+		</div>
+	</div>
 
 {% endblock content %}

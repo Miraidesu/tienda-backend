@@ -26,7 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.index, name='index'),
 	path('componentes/<int:id>', views.detalle_componente, name='detalle_componente'),
-	path('componentes/', views.lista_componentes, name='lista_componentes')
+	path('componentes/', views.lista_componentes, name='lista_componentes'),
+	path('carrito/', views.carrito_compras, name='carrito'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
