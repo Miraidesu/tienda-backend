@@ -4,12 +4,8 @@ from tienda.models import Componente, TipoComponente
 def index(request):
     return render(request, "index.html")
 
-def lista_componentes(request, categoria):
-    if categoria == "todo":
-        comp = Componente.objects.all()
-    else:
-        cat = get_object_or_404(TipoComponente, nombre=categoria)
-        comp = Componente.objects.filter(tipo=cat)
+def lista_componentes(request):
+    comp = Componente.objects.all()
 
     context = {"componentes": comp}
     return render(request, "listado.html", context)
