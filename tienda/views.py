@@ -41,7 +41,10 @@ class Carrito:
 carrito = Carrito([{ "id": 1, "cantidad": 2 }])
 
 def index(request):
-    return render(request, "index.html")
+    comp = Componente.objects.all().order_by("?")[:4]
+    context = {"componentes": comp}
+
+    return render(request, "index.html", context)
 
 def lista_componentes(request):
     comp = Componente.objects.all()
