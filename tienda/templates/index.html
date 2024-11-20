@@ -2,6 +2,114 @@
 
 {% block content %}
 <main class="min-h-full m-4">
+
+<h1 class="text x2 font-bold text-center text-white">Productos Mas Populares</h1>
+
+    <div class="carousel carousel-center bg-neutral rounded-box max-w-7xl space-x-5 p-5">
+        <div class="carousel carousel-center bg-neutral rounded-box max-w-7xl space-x-5 p-5">
+            {% for componente in componentes %}
+            <a href="/componentes/{{componente.id}}" class="btn bg-base-300 hover:bg-[#0c0f12] flex flex-col h-full gap-0 m-0 p-0 rounded-2xl border-0">
+                <div class="card card-compact w-72 flex-grow">
+                    <figure>
+                    <img class="p-8 w-full h-64 bg-white object-contain" src="{{componente.imagen.url}}"/>
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="text-left card-title text-white">{{componente.nombre}}</h2>
+                        <p class="flex text-xl">${{componente.precio}}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <hr class="my-8 border-gray-600">
+
+    <h1 class="text x2 font-bold text-center text-white">Categorias Populares</h1>
+
+
+
+    <!--AQUI SE TOCARA LAS COSAS CUANDO EXISTAN LA CATEGORIA WOOWOWOWOWO 🤪-->
+
+    <div class="flex">
+        <div class="card card-side bg-base-100 shadow-xl w-2/5">
+            <figure>
+              <img
+                class="object-contain w-full h-48"
+                src="https://media.spdigital.cl/thumbnails/products/r5g0sawh_2ab7cdac_thumbnail_512.png"
+                alt="Movie" />
+            </figure>
+            <div class="card-body">
+              <h2 class="card-title">Gabinetes</h2>
+              <p>El mejor espacio para tu PC!!</p>
+              <div class="card-actions justify-end"> <!--AQUI DEJAREMOS LAS CATEGORIAS WOWOWOWO 🤪-->
+                <button class="btn btn-primary">Watch</button>
+              </div>
+            </div>
+          </div>
+
+        <div class="w-1/5"></div>
+
+          <div class="card card-side bg-base-100 shadow-xl w-2/5">
+            <figure>
+              <img
+                class="object-contain w-full h-48"
+               src="https://i.blogs.es/debcf3/product_7_20190524132704_5ce780a89dddb/450_1000.png" 
+               alt="xd">
+            </figure>
+            <div class="card-body">
+              <h2 class="card-title">Grafica</h2>
+              <p>Juega a tus juegos al con los mejores Grafico!</p>
+              <div class="card-actions justify-end"> <!--AQUI DEJAREMOS LAS CATEGORIAS WOWOWOWO 🤪-->
+                <button class="btn btn-primary">Watch</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="my-8"></div>
+
+    <div class="flex"> 
+        <div class="card card-side bg-base-100 shadow-xl w-2/5">
+            <figure>
+              <img
+                class="object-contain w-full h-48"
+                src="https://www.westerndigital.com/content/dam/store/en-us/assets/products/internal-storage/pc-sn810-nvme-ssd/gallery/pc-sn810-nvme-ssd.png"
+                alt="Movie" />
+            </figure>
+            <div class="card-body">
+              <h2 class="card-title">SSD</h2>
+              <p>Descarga tus juegos a la mejor velocidad!!</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary">Watch</button><!--AQUI DEJAREMOS LAS CATEGORIAS WOWOWOWO 🤪-->
+              </div>
+            </div>
+          </div>
+
+          <div class="w-1/5"></div>
+
+          <div class="card card-side bg-base-100 shadow-xl w-2/5">
+            <figure>
+              <img
+                src="https://i.btcdn.co/r/czo0MTg0LGc6MjYweA/236c646e/913678-909737-FURY_Beast_RGB_Black_DDR4_1_s.webp"
+                alt="Movie" />
+            </figure>
+            <div class="card-body">
+              <h2 class="card-title">Ram</h2>
+              <p>Haz que tus juegos Vayan muy fluidos!</p>
+              <div class="card-actions justify-end"> <!--AQUI DEJAREMOS LAS CATEGORIAS WOWOWOWO 🤪-->
+                <button class="btn btn-primary">Watch</button>
+              </div>
+            </div>
+            
+    </div>
+
+
+
+
+          
   
 </main>
 {% endblock content %}
