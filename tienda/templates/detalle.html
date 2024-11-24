@@ -17,8 +17,6 @@
 	<span>{alert.mensaje}</span>
   </div>
 {% endif %}
-
-
 <div class="flex flex-col md:flex-row m-8">
 	<img 
 		class="p-8 w-80 h-80 rounded-xl bg-white object-contain" 
@@ -32,20 +30,34 @@
 	<div class="flex flex-col items-end">
 		<h1 class="text-3xl font-bold">${{componente.precio}}</h1>
 		<p>Stock: <b>{{componente.stock}}</b></p>
-		<form action="{% url 'agregar_carrito' componente.id %}" method="post">
-			{% csrf_token %}
-			<input name="cantidad" type="number" class="input input-bordered" value="1" min="1" max="{{componente.stock}}">
-			<button class="btn btn-primary mt-8" type="submit" >Agregar al carrito</button>
-		</form>
-		<p>Subtotal: <b id="asd">$</b></p>
+		{% if componente.stock == 0 %}
+			<p class="text-red-500">Agotado</p>
+		{% else %}
+			<form action="{% url 'agregar_carrito' componente.id %}" method="post">
+				{% csrf_token %}
+				<input id="cantidad" name="cantidad" type="number" oninput="calcularTotal()" 
+				class="input input-bordered" value="1" min="1" max="{{componente.stock}}">
+				<button class="btn btn-primary mt-8" type="submit" >Agregar al carrito</button>
+			</form>
+			<div class="flex pt-2">
+				<p class="p-4">Total: </p>
+				<input id="total" class="input input-bordered" type="number" readonly>
+			</div>
+		{% endif %}
+		
 	</div>
-	
 </div>
 
+<script defer>
+	function calcularTotal(){
+		const inputTotal = document.getElementById('total');
+		const cantidad = document.getElementById('cantidad').value;
+		const total = cantidad * {{componente.precio}}
+		
+		inputTotal.value = total;
+	}
 
-<script>
-	
-	const asd = document.getElementById('asd');
-	asd.innerHTML = "ASDSAD";
+	calcularTotal()
 </script>
+
 {% endblock content %}

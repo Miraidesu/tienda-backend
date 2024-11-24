@@ -13,11 +13,13 @@
 						Ver productos
 					</a>
 				</li>
+				{% if request.session.usuario %}
 				<li>
 					<a href="{% url 'carrito_compras' %}">
 						Carrito
 					</a>
 				</li>
+				{% endif %}
 			  </li>
 			</ul>
 		</div>

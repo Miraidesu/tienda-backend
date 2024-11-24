@@ -1,41 +1,5 @@
 from django.shortcuts import render, redirect
-from tienda.models import Componente
-
-class Carrito:
-    def __init__(self, listado=None) -> None:
-        if listado is None:
-            listado = [] 
-        self.listado = listado
-
-    def agregar(self, producto: dict) -> bool:
-        self.listado.append(producto)
-    
-    def vaciar(self) -> None:
-        self.listado = []
-
-    def ver_carrito(self) -> list:
-        detalle_carrito = []
-        lista_comp = Componente.objects.all()
-        
-        if not self.listado:
-            return detalle_carrito
-
-        for comp in lista_comp:
-            comp_carr = [p for p in self.listado if p["id"] == comp.id]
-            if comp_carr:
-                detalle_carrito.append({
-                    "producto": comp,
-                    "cantidad": comp_carr[0]["cantidad"]
-                })
-        print(detalle_carrito)
-        return detalle_carrito
-
-    def esta_comp_en_carrito(self, id) -> bool:
-        for c in self.listado:
-            if c["id"] == id:
-                return True
-        return False
-    
+from tienda.models import Componente, Venta, DetalleVenta
 
 def iniciar_sesion(request):
     request.session['usuario'] = "admin"
@@ -105,3 +69,33 @@ def agregar_carrito(request, id):
         return redirect("carrito_compras")
     
     return redirect("detalle_componente", id=id)
+
+def pagar(request):
+    carrito = request.session['carrito']
+    total = 0
+    lista_comp = Componente.objects.all()
+
+    for comp in lista_comp:
+        comp_carr = [p for p in carrito if p["id"] == comp.id]
+        if comp_carr:
+            total += comp_carr[0]["cantidad"] * comp.precio
+
+    venta = Venta(total=total)
+    venta.save()
+
+    for comp in lista_comp:
+        comp_carr = [p for p in carrito if p["id"] == comp.id]
+        if comp_carr:
+            comp.stock -= comp_carr[0]["cantidad"]
+            comp.save()
+
+            detalle = DetalleVenta(
+                componente=comp,
+                cantidad=comp_carr[0]["cantidad"],
+                subtotal=comp_carr[0]["cantidad"] * comp.precio,
+                venta=venta
+            )
+            detalle.save()
+            
+    request.session['carrito'] = []
+    return redirect("index")

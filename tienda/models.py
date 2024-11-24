@@ -16,3 +16,18 @@ class TipoComponente(models.Model):
 
 	def __str__(self):
 		return self.nombre
+	
+class Venta(models.Model):
+	total = models.IntegerField()
+
+	def __str__(self):
+		return str(self.id)
+
+class DetalleVenta(models.Model):
+	componente = models.ForeignKey('Componente', on_delete=models.CASCADE)
+	cantidad = models.IntegerField()
+	subtotal = models.IntegerField()
+	venta = models.ForeignKey('Venta', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return str(self.id)
