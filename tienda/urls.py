@@ -25,6 +25,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.index, name='index'),
+	path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'),
+	path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
 	path('componentes/<int:id>', views.detalle_componente, name='detalle_componente'),
 	path('componentes/', views.lista_componentes, name='lista_componentes'),
 	path('carrito/', views.carrito_compras, name='carrito_compras'),
