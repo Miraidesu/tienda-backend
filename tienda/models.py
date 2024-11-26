@@ -18,6 +18,7 @@ class TipoComponente(models.Model):
 		return self.nombre
 	
 class Venta(models.Model):
+	usuario = models.CharField(max_length=100, null=True)
 	total = models.IntegerField()
 
 	def __str__(self):

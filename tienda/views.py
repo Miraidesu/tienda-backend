@@ -15,6 +15,7 @@ def cerrar_sesion(request):
 
 def index(request):
     comp = Componente.objects.all()[:4]
+    
     context = {"componentes": comp}
 
     return render(request, "index.html", context)
@@ -80,7 +81,10 @@ def pagar(request):
         if comp_carr:
             total += comp_carr[0]["cantidad"] * comp.precio
 
-    venta = Venta(total=total)
+    venta = Venta(
+        usuario=request.session['usuario'],
+        total=total
+        )
     venta.save()
 
     for comp in lista_comp:
