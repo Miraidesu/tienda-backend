@@ -2,14 +2,16 @@
 
 {% block content %}
 	<div class="card flex bg-base-300 w-96 shadow-xl">
-		<h1 class="flex justify-center px-8 pt-4 font-bold text-3xl">Login</h1>
-		<form  action="{% url 'login_html_view' %}" method="post">
+		<h1 class="flex justify-center px-8 pt-4 font-bold text-3xl">Registro</h1>
+		<form  action="{% url 'registrar' %}" method="post">
 			<div class="card-body gap-8">
 				{% csrf_token %}
 				<input type="text" class="input input-bordered w-full max-w-xs"
-					name="username" placeholder="Usuario">
+					name="username" placeholder="Usuario" required>
+				<input type="email" class="input input-bordered w-full max-w-xs"
+					name="email" placeholder="E-mail" required>
 				<input type="password" class="input input-bordered w-full max-w-xs"
-					name="password" placeholder="Contraseña">
+					name="password" placeholder="Contraseña" required>
 				<button type="submit" class="btn btn-primary">Entrar</button>
 				{% if error %}
 					<p class="text-red-500">{{ error }}</p>

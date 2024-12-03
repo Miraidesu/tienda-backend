@@ -20,9 +20,42 @@ class LoginView(APIView):
                 "email": user.email
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+def registrar(request):
+    if request.user.is_authenticated:
+        return redirect("index")
+
+    error = None
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        if User.objects.filter(username=username).exists():
+            error = "El usuario ya existe"
+            return render(request, "registrar.html", { "error": error })
+        
+        if User.objects.filter(email=email).exists():
+            error = "El email ya existe"
+            return render(request, "registrar.html", { "error": error })
+
+        User.objects.create_user(username, email, password)
+
+        user = authenticate(username=username, password=password)
+        request.session['carrito'] = []
+        auth_login(request, user)
+
+        return redirect("index")
+
+    return render(request, "registrar.html", { "error": error })
 
 def login_html_view(request):
+    if request.user.is_authenticated:
+        return redirect("index")
+    
     error = None
+
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -40,7 +73,7 @@ def login_html_view(request):
 
 @login_required
 def logout_html_view(request):
-    del request.session['carrito']
+    request.session.pop('carrito', None)
     logout(request)
     return redirect("index")
 
@@ -63,6 +96,9 @@ def detalle_componente(request, id):
     return render(request, "detalle.html", context)
 
 def carrito_compras(request):
+    if not request.user.is_authenticated:
+        return redirect("index")
+
     carrito = request.session['carrito']
 
     detalle_carrito = []
@@ -102,6 +138,7 @@ def agregar_carrito(request, id):
     
     return redirect("detalle_componente", id=id)
 
+@login_required
 def pagar(request):
     carrito = request.session['carrito']
     total = 0
@@ -113,7 +150,7 @@ def pagar(request):
             total += comp_carr[0]["cantidad"] * comp.precio
 
     venta = Venta(
-        usuario=request.session['usuario'],
+        usuario=request.user,
         total=total
         )
     venta.save()

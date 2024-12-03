@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 class Componente(models.Model):
 	nombre = models.CharField(max_length=100)
@@ -18,7 +19,7 @@ class TipoComponente(models.Model):
 		return self.nombre
 	
 class Venta(models.Model):
-	usuario = models.CharField(max_length=100, null=True)
+	usuario = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
 	total = models.IntegerField()
 
 	def __str__(self):

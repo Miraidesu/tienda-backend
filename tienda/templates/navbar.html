@@ -25,7 +25,7 @@
 		</div>
 		<div class="flex-1">
 			{% if user.is_authenticated %}
-				<ul class="menu menu-horizontal px-1">
+				<ul class="menu menu-horizontal px-1 z-[1] ">
 				<li>
 					<details>
 					<summary>{{user.username}}</summary>
@@ -44,6 +44,11 @@
 					<li>
 						<a href="{% url 'login_html_view' %}">
 							Iniciar sesion
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'registrar' %}">
+							Registrarse
 						</a>
 					</li>
 				</ul>
