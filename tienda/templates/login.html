@@ -1,0 +1,22 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+
+<div class="card flex bg-base-300 w-96 shadow-xl">
+	<h1 class="flex justify-center px-8 pt-4 font-bold text-3xl">Login</h1>
+	<form  action="{% url 'login_html_view' %}" method="post">
+		<div class="card-body gap-8">
+			{% csrf_token %}
+			<input type="text" class="input input-bordered w-full max-w-xs"
+				name="username" placeholder="Usuario">
+			<input type="password" class="input input-bordered w-full max-w-xs"
+				name="password" placeholder="Contraseña">
+			<button type="submit" class="btn btn-primary">Entrar</button>
+			{% if error %}
+				<p class="text-red-500">{{ error }}</p>
+			{% endif %}
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -13,7 +13,7 @@
 						Ver productos
 					</a>
 				</li>
-				{% if request.session.usuario %}
+				{% if user.is_authenticated %}
 				<li>
 					<a href="{% url 'carrito_compras' %}">
 						Carrito
@@ -24,14 +24,14 @@
 			</ul>
 		</div>
 		<div class="flex-1">
-			{% if request.session.usuario %}
+			{% if user.is_authenticated %}
 				<ul class="menu menu-horizontal px-1">
 				<li>
 					<details>
-					<summary>{{request.session.usuario}}</summary>
+					<summary>{{user.username}}</summary>
 					<ul class="bg-base-100 rounded-t-none p-2">
 						<li>
-							<a href="{% url 'cerrar_sesion' %}">
+							<a href="{% url 'logout_html_view' %}">
 								Cerrar Sesion
 							</a>
 						</li>
@@ -42,7 +42,7 @@
 			{% else %}
 				<ul class="menu menu-horizontal px-1">
 					<li>
-						<a href="{% url 'iniciar_sesion' %}">
+						<a href="{% url 'login_html_view' %}">
 							Iniciar sesion
 						</a>
 					</li>

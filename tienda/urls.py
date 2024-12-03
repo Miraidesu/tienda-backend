@@ -21,12 +21,13 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from . import views
+from .views import LoginView, login_html_view, logout_html_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.index, name='index'),
-	path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'),
-	path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
+	path('login/', views.login_html_view, name='login_html_view'),
+	path('logout/', views.logout_html_view, name='logout_html_view'),
 	path('componentes/<int:id>', views.detalle_componente, name='detalle_componente'),
 	path('componentes/', views.lista_componentes, name='lista_componentes'),
 	path('carrito/', views.carrito_compras, name='carrito_compras'),

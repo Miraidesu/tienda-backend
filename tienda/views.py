@@ -1,16 +1,47 @@
 from django.shortcuts import render, redirect
 from tienda.models import Componente, Venta, DetalleVenta
+# Login
+from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from tienda.serializers import LoginSerializer
 
-def iniciar_sesion(request):
-    request.session['usuario'] = "admin"
-    request.session['carrito'] = []
+class LoginView(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data
+            return Response({
+                "message": "Login exitoso",
+                "username": user.username,
+                "email": user.email
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return redirect("index")
+def login_html_view(request):
+    error = None
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
-def cerrar_sesion(request):
-    del request.session['usuario']
+        user = authenticate(username=username, password=password)
+
+        if user:
+            auth_login(request, user)
+            request.session['carrito'] = []
+            return redirect("index")
+
+        error = "Usuario o contraseña incorrectos"
+    
+    return render(request, "login.html", { "error": error })
+
+@login_required
+def logout_html_view(request):
     del request.session['carrito']
-
+    logout(request)
     return redirect("index")
 
 def index(request):
