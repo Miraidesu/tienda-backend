@@ -14,6 +14,7 @@
 						<th>Precio<br>unitario</th>
 						<th>Cantidad</th>
 						<th>Subtotal</th>
+						<th>Quitar</th>
 					  </tr>
 					</thead>
 					<tbody>
@@ -29,6 +30,12 @@
 							<td>${{item.producto.precio}}</td>
 							<td>{{item.cantidad}}</td>
 							<td>${{item.subtotal}}</td>
+							<td>
+								<form action="{% url 'quitar_carrito' item.producto.id %}" method="post">
+									{% csrf_token %}
+									<button class="btn btn-error" type="submit">Quitar</button>
+								</form>
+							</td>
 						</tr>
 					  {% endfor %}
 					</tbody>

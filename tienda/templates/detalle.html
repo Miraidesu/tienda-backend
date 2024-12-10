@@ -33,16 +33,18 @@
 		{% if componente.stock == 0 %}
 			<p class="text-red-500">Agotado</p>
 		{% else %}
-			<form action="{% url 'agregar_carrito' componente.id %}" method="post">
-				{% csrf_token %}
-				<input id="cantidad" name="cantidad" type="number" oninput="calcularTotal()" 
-				class="input input-bordered" value="1" min="1" max="{{componente.stock}}">
-				<button class="btn btn-primary mt-8" type="submit" >Agregar al carrito</button>
-			</form>
-			<div class="flex pt-2">
-				<p class="p-4">Total: </p>
-				<input id="total" class="input input-bordered" type="number" readonly>
-			</div>
+			{% if user.is_authenticated %}
+				<form action="{% url 'agregar_carrito' componente.id %}" method="post">
+					{% csrf_token %}
+					<input id="cantidad" name="cantidad" type="number" oninput="calcularTotal()" 
+					class="input input-bordered" value="1" min="1" max="{{componente.stock}}">
+					<button class="btn btn-primary mt-8" type="submit" >Agregar al carrito</button>
+				</form>
+				<div class="flex pt-2">
+					<p class="p-4">Total: </p>
+					<input id="total" class="input input-bordered" type="number" readonly>
+				</div>
+			{% endif %}
 		{% endif %}
 		
 	</div>

@@ -138,6 +138,19 @@ def agregar_carrito(request, id):
     
     return redirect("detalle_componente", id=id)
 
+def quitar_carrito(request, id):
+    if request.method == "POST":
+        carrito = request.session['carrito']
+
+        for c in carrito:
+            if c["id"] == id:
+                carrito.remove(c)
+                break
+
+        request.session['carrito'] = carrito
+    
+    return redirect("carrito_compras")
+
 @login_required
 def pagar(request):
     carrito = request.session['carrito']
